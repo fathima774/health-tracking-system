@@ -3,6 +3,7 @@ import Navbar from "./components/layouts/Navbar"
 import Register from "./pages/Register"
 import SummaryCard from "./components/dashboard/SummaryCard"
 import GoalChart from "./components/dashboard/GoalChart"
+import WeightChart from "./components/dashboard/WeightChart"
 
 
 
@@ -50,7 +51,8 @@ function App() {
         color="#6C5CE7"
       />
       </div> */}
-      <GoalChart />
+      {/* <GoalChart /> */}
+      <WeightChart />
         
 
     
