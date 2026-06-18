@@ -1,0 +1,12 @@
+.goal-chart-container {
+  background: white;
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 12px;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.goal-chart-container h2 {
+  margin-bottom: 20px;
+  color: #2d3436;
+}
