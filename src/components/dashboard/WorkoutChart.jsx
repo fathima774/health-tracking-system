@@ -1,7 +1,7 @@
 import React from "react";
 import {
-  LineChart,
-  Line,
+  BarChart,
+  Bar,
   XAxis,
   YAxis,
   Tooltip,
@@ -9,31 +9,29 @@ import {
   CartesianGrid,
 } from "recharts";
 
-const WeightChart = ({ data }) => {
+const WorkoutChart = ({ data }) => {
   return (
     <div className="chart-container">
-      <h2>Weight Progress</h2>
+      <h2>Workout Activity</h2>
 
       <ResponsiveContainer width="100%" height={300}>
-        <LineChart data={data}>
+        <BarChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />
 
-          <XAxis dataKey="date" />
+          <XAxis dataKey="workoutName" />
 
           <YAxis />
 
           <Tooltip />
 
-          <Line
-            type="monotone"
-            dataKey="weight"
-            stroke="#00B894"
-            strokeWidth={3}
+          <Bar
+            dataKey="calories"
+            fill="#0984E3"
           />
-        </LineChart>
+        </BarChart>
       </ResponsiveContainer>
     </div>
   );
 };
 
-export default WeightChart;
+export default WorkoutChart;

@@ -4,6 +4,12 @@ import Register from "./pages/Register"
 import SummaryCard from "./components/dashboard/SummaryCard"
 import GoalChart from "./components/dashboard/GoalChart"
 import WeightChart from "./components/dashboard/WeightChart"
+import WorkoutChart from "./components/dashboard/WorkoutChart"
+import Dashboard from "./components/dashboard/Dashboard"
+import Login from "./pages/Login"
+import WeightTracker from "./pages/WeightTracker";
+import Workouts from "./pages/Workouts";
+import Goals from "./pages/Goals";
 
 
 
@@ -13,46 +19,19 @@ function App() {
 
   return (
     <>
-    {/* <BrowserRouter> */}
-    {/* <Navbar /> */}
-    {/* <Register /> */}
-    {/* </BrowserRouter> */}
-
-    {/* <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
-
-
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Register />} />
+        <Route path="/login" element={<Login/>} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/weight-tracker" element={<WeightTracker />} />
+        <Route path="/workouts" element={<Workouts />} />
+        <Route path="/goals" element={<Goals />} />
+      </Routes>
+    </BrowserRouter>
     
 
-      <SummaryCard
-        title="Current Weight"
-        value="76 kg"
-        icon="⚖️"
-        color="#00B894"
-      />
-
-      <SummaryCard
-        title="Total Workouts"
-        value="45"
-        icon="🏋️"
-        color="#0984E3"
-      />
-
-      <SummaryCard
-        title="Calories Burned"
-        value="12,500"
-        icon="🔥"
-        color="#FDCB6E"
-      />
-
-      <SummaryCard
-        title="Active Goals"
-        value="3"
-        icon="🎯"
-        color="#6C5CE7"
-      />
-      </div> */}
-      {/* <GoalChart /> */}
-      <WeightChart />
+    
         
 
     

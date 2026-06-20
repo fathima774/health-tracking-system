@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
 import "../../src/assets/styles/register.css"
 
 const Register = () => {
@@ -32,7 +32,7 @@ const Register = () => {
 
     // API Call Here
     // registerUser(formData)
-    navigate("/Home");
+    navigate("/login");
   };
 
   return (
@@ -96,7 +96,8 @@ const Register = () => {
         </form>
 
         <p className="login-link">
-          Already have an account? <a href="/login">Login</a>
+          Already have an account?{" "}
+           <Link to="/login">Login</Link>
         </p>
       </div>
     </div>
