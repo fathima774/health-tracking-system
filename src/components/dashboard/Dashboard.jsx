@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 
+import Navbar from "../layouts/Navbar";
+
 import SummaryCard from "./SummaryCard";
 import WeightChart from "./WeightChart";
 import WorkoutChart from "./WorkoutChart";
 import GoalChart from "./GoalChart";
+import DashboardStats from "./DashboardStats";
 
-import Navbar from "../layouts/Navbar";
+import "../../assets/styles/dashboard.css";
 
 function Dashboard() {
   const [weights, setWeights] = useState([]);
@@ -27,67 +30,115 @@ function Dashboard() {
     setGoals(storedGoals);
   }, []);
 
+  // Current Weight
   const currentWeight =
     weights.length > 0
       ? weights[weights.length - 1].weight
       : 0;
 
+  // Total Workouts
   const totalWorkouts = workouts.length;
 
+  // Calories Burned
   const caloriesBurned = workouts.reduce(
-    (sum, workout) =>
-      sum + Number(workout.calories || 0),
+    (total, workout) =>
+      total + Number(workout.calories || 0),
     0
   );
 
+  // Active Goals
   const activeGoals = goals.length;
+
+  // Goal Chart Data
+  const goalData = goals.map((goal) => ({
+    goalName: goal.goalName,
+    progress: Number(goal.target),
+  }));
 
   return (
     <>
       <Navbar />
 
-      <div
-        style={{
-          display: "flex",
-          gap: "20px",
-          flexWrap: "wrap",
-          marginTop: "20px",
-        }}
-      >
-        <SummaryCard
-          title="Current Weight"
-          value={`${currentWeight} kg`}
-          icon="⚖️"
-          color="#00B894"
-        />
+      <div className="dashboard-container">
 
-        <SummaryCard
-          title="Total Workouts"
-          value={totalWorkouts}
-          icon="🏋️"
-          color="#0984E3"
-        />
+        {/* Welcome Section */}
+        <div className="welcome-section">
+          <h1>Welcome Back 👋</h1>
 
-        <SummaryCard
-          title="Calories Burned"
-          value={caloriesBurned}
-          icon="🔥"
-          color="#FDCB6E"
-        />
+          <p>
+            Track your fitness progress and stay healthy
+            with VitalSync.
+          </p>
+        </div>
 
-        <SummaryCard
-          title="Active Goals"
-          value={activeGoals}
-          icon="🎯"
-          color="#6C5CE7"
-        />
+        {/* Summary Cards */}
+        <div className="summary-section">
+
+          <SummaryCard
+            title="Current Weight"
+            value={`${currentWeight} kg`}
+            icon="⚖️"
+            color="#00B894"
+          />
+
+          <SummaryCard
+            title="Total Workouts"
+            value={totalWorkouts}
+            icon="🏋️"
+            color="#0984E3"
+          />
+
+          <SummaryCard
+            title="Calories Burned"
+            value={caloriesBurned}
+            icon="🔥"
+            color="#FDCB6E"
+          />
+
+          <SummaryCard
+            title="Active Goals"
+            value={activeGoals}
+            icon="🎯"
+            color="#6C5CE7"
+          />
+
+        </div>
+
+        {/* Weight & Workout Charts */}
+        <div className="chart-row">
+
+          <div className="chart-container">
+            <WeightChart data={weights} />
+          </div>
+
+          <div className="chart-container">
+            <WorkoutChart data={workouts} />
+          </div>
+
+        </div>
+
+        {/* Goal Progress Chart */}
+        <div className="goal-section">
+
+          <div className="chart-container">
+            <GoalChart data={goalData} />
+          </div>
+
+        </div>
+
+        {/* Dashboard Statistics */}
+        <div className="stats-section">
+
+          <DashboardStats
+            totalWorkouts={totalWorkouts}
+            activeGoals={activeGoals}
+            caloriesBurned={caloriesBurned}
+            currentWeight={currentWeight}
+          />
+
+        </div>
+
       </div>
-
-      <WeightChart data={weights} />
-
-      <WorkoutChart data={workouts} />
-
-      <GoalChart data={goals} />
     </>
   );
 }

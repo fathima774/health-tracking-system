@@ -1,78 +1,156 @@
 import React, { useState } from "react";
+import { FaEdit, FaTrash } from "react-icons/fa";
+import "../assets/styles/form.css";
 
 function Goals() {
   const [goalName, setGoalName] = useState("");
   const [target, setTarget] = useState("");
-  const [progress, setProgress] = useState("");
+  const [search, setSearch] = useState("");
+  const [editIndex, setEditIndex] = useState(null);
+
+  const [goals, setGoals] = useState(
+    JSON.parse(localStorage.getItem("goals")) || []
+  );
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const newGoal = {
-      goalName,
-      target,
-      progress,
-    };
+    if (editIndex !== null) {
+      const updated = [...goals];
 
-    const existingGoals =
-      JSON.parse(localStorage.getItem("goals")) || [];
+      updated[editIndex] = {
+        goalName,
+        target,
+      };
 
-    const updatedGoals = [
-      ...existingGoals,
-      newGoal,
-    ];
+      setGoals(updated);
 
-    localStorage.setItem(
-      "goals",
-      JSON.stringify(updatedGoals)
-    );
+      localStorage.setItem(
+        "goals",
+        JSON.stringify(updated)
+      );
 
-    alert("Goal Added!");
+      setEditIndex(null);
+    } else {
+      const newGoal = {
+        goalName,
+        target,
+      };
+
+      const updated = [...goals, newGoal];
+
+      setGoals(updated);
+
+      localStorage.setItem(
+        "goals",
+        JSON.stringify(updated)
+      );
+    }
 
     setGoalName("");
     setTarget("");
-    setProgress("");
   };
 
+  const handleEdit = (index) => {
+    setGoalName(goals[index].goalName);
+    setTarget(goals[index].target);
+    setEditIndex(index);
+  };
+
+  const handleDelete = (index) => {
+    const updated = goals.filter(
+      (_, i) => i !== index
+    );
+
+    setGoals(updated);
+
+    localStorage.setItem(
+      "goals",
+      JSON.stringify(updated)
+    );
+  };
+
+  const filtered = goals.filter((goal) =>
+    goal.goalName
+      .toLowerCase()
+      .includes(search.toLowerCase())
+  );
+
   return (
-    <div>
-      <h2>Create Goal</h2>
+    <div className="form-container">
+      <div className="form-card">
 
-      <form onSubmit={handleSubmit}>
+        <h2>Goals</h2>
+
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="Goal Name"
+            value={goalName}
+            onChange={(e) =>
+              setGoalName(e.target.value)
+            }
+            required
+          />
+
+          <input
+            type="number"
+            placeholder="Target in kg"
+            value={target}
+            onChange={(e) =>
+              setTarget(e.target.value)
+            }
+            required
+          />
+
+          <button type="submit">
+            {editIndex !== null
+              ? "Update Goal"
+              : "Add Goal"}
+          </button>
+        </form>
+
         <input
+          className="search-box"
           type="text"
-          placeholder="Goal Name"
-          value={goalName}
+          placeholder="Search Goal"
+          value={search}
           onChange={(e) =>
-            setGoalName(e.target.value)
+            setSearch(e.target.value)
           }
-          required
         />
 
-        <input
-          type="number"
-          placeholder="Target Value"
-          value={target}
-          onChange={(e) =>
-            setTarget(e.target.value)
-          }
-          required
-        />
+        {filtered.map((goal, index) => (
+          <div key={index} className="record-card">
 
-        <input
-          type="number"
-          placeholder="Current Progress (%)"
-          value={progress}
-          onChange={(e) =>
-            setProgress(e.target.value)
-          }
-          required
-        />
+            <div className="record-info">
+              <h4>{goal.goalName}</h4>
+              <p>Target: {goal.target}</p>
+            </div>
 
-        <button type="submit">
-          Save Goal
-        </button>
-      </form>
+            <div className="record-actions">
+              <button
+                className="action-btn edit-btn"
+                onClick={() =>
+                  handleEdit(index)
+                }
+              >
+                <FaEdit />
+              </button>
+
+              <button
+                className="action-btn delete-btn"
+                onClick={() =>
+                  handleDelete(index)
+                }
+              >
+                <FaTrash />
+              </button>
+            </div>
+
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "../assets/styles/login.css";
 
-const Login = () => {
+function Login() {
   const navigate = useNavigate();
 
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
   });
+
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     setLoginData({
@@ -20,12 +22,35 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log("Login Data:", loginData);
+    setError("");
 
-    alert("Login Successful!");
+    const users =
+      JSON.parse(localStorage.getItem("users")) || [];
 
-    // Go to Dashboard
-    navigate("/dashboard");
+    const user = users.find(
+      (u) =>
+        u.email.trim().toLowerCase() ===
+          loginData.email.trim().toLowerCase() &&
+        u.password === loginData.password
+    );
+
+    if (user) {
+      localStorage.setItem(
+        "currentUser",
+        JSON.stringify(user)
+      );
+
+      localStorage.setItem(
+        "isLoggedIn",
+        "true"
+      );
+
+      alert(`Welcome ${user.name}`);
+
+      navigate("/dashboard");
+    } else {
+      setError("Invalid Email or Password");
+    }
   };
 
   return (
@@ -37,10 +62,11 @@ const Login = () => {
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Email</label>
+
             <input
               type="email"
               name="email"
-              placeholder="Enter email"
+              placeholder="Enter Email"
               value={loginData.email}
               onChange={handleChange}
               required
@@ -49,17 +75,32 @@ const Login = () => {
 
           <div className="form-group">
             <label>Password</label>
+
             <input
               type="password"
               name="password"
-              placeholder="Enter password"
+              placeholder="Enter Password"
               value={loginData.password}
               onChange={handleChange}
               required
             />
           </div>
 
-          <button type="submit" className="login-btn">
+          {error && (
+            <p
+              style={{
+                color: "red",
+                marginBottom: "10px",
+              }}
+            >
+              {error}
+            </p>
+          )}
+
+          <button
+            type="submit"
+            className="login-btn"
+          >
             Login
           </button>
         </form>
@@ -71,6 +112,6 @@ const Login = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Login;

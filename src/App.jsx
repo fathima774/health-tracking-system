@@ -10,6 +10,7 @@ import Login from "./pages/Login"
 import WeightTracker from "./pages/WeightTracker";
 import Workouts from "./pages/Workouts";
 import Goals from "./pages/Goals";
+import Profile from "./pages/Profile"
 
 
 
@@ -27,6 +28,7 @@ function App() {
         <Route path="/weight-tracker" element={<WeightTracker />} />
         <Route path="/workouts" element={<Workouts />} />
         <Route path="/goals" element={<Goals />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </BrowserRouter>
     

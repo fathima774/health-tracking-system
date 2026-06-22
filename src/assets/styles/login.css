@@ -85,3 +85,11 @@
 .login-card a:hover {
   text-decoration: underline;
 }
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  font-weight: 600;
+}
