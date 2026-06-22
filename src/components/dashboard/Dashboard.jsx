@@ -6,7 +6,9 @@ import SummaryCard from "./SummaryCard";
 import WeightChart from "./WeightChart";
 import WorkoutChart from "./WorkoutChart";
 import GoalChart from "./GoalChart";
-import DashboardStats from "./DashboardStats";
+import BMIResult from "./BMIResult";
+
+
 
 import "../../assets/styles/dashboard.css";
 
@@ -54,6 +56,8 @@ function Dashboard() {
     goalName: goal.goalName,
     progress: Number(goal.target),
   }));
+
+  const height=176
 
   return (
     <>
@@ -126,17 +130,15 @@ function Dashboard() {
 
         </div>
 
-        {/* Dashboard Statistics */}
-        <div className="stats-section">
+        <div className="bmi-section">
+  <BMIResult
+    weight={currentWeight}
+    height={height}
+  />
+</div>
+       
 
-          <DashboardStats
-            totalWorkouts={totalWorkouts}
-            activeGoals={activeGoals}
-            caloriesBurned={caloriesBurned}
-            currentWeight={currentWeight}
-          />
-
-        </div>
+       
 
       </div>
     </>

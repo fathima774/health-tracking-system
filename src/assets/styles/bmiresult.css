@@ -1,0 +1,38 @@
+.bmi-card {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.08);
+  margin-top: 20px;
+  width: 350px;
+}
+
+.bmi-card h2 {
+  color: #2d3436;
+  margin-bottom: 20px;
+}
+
+.bmi-value {
+  font-size: 60px;
+  font-weight: bold;
+  color: #00B894;
+}
+
+.bmi-status {
+  margin-top: 15px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #636e72;
+}
+
+@media (max-width: 768px) {
+  .bmi-value {
+    font-size: 45px;
+  }
+}
+.bmi-section {
+  display: flex;
+  justify-content: center;
+  margin: 30px 0;
+}
