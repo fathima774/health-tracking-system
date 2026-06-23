@@ -3,80 +3,71 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import "../assets/styles/form.css";
 
 function WeightTracker() {
-  const [weight, setWeight] =
-    useState("");
+  const [weight, setWeight] = useState("");
+  const [date, setDate] = useState("");
+  const [search, setSearch] = useState("");
+  const [editIndex, setEditIndex] = useState(null);
 
-  const [date, setDate] =
-    useState("");
-
-  const [search, setSearch] =
-    useState("");
-
-  const [editIndex, setEditIndex] =
-    useState(null);
-
-  const [records, setRecords] =
-    useState(
-      JSON.parse(
-        localStorage.getItem(
-          "weights"
-        )
-      ) || []
-    );
+  const [weights, setWeights] = useState(
+    JSON.parse(localStorage.getItem("weights")) || []
+  );
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const newRecord = {
-      weight,
-      date,
-    };
-
-    let updated;
+    if (!weight || !date) {
+      alert("Please fill all fields");
+      return;
+    }
 
     if (editIndex !== null) {
-      updated = [...records];
-      updated[editIndex] =
-        newRecord;
+      const updated = [...weights];
+
+      updated[editIndex] = {
+        weight,
+        date,
+      };
+
+      setWeights(updated);
+
+      localStorage.setItem(
+        "weights",
+        JSON.stringify(updated)
+      );
 
       setEditIndex(null);
     } else {
-      updated = [
-        ...records,
-        newRecord,
-      ];
+      const newWeight = {
+        weight,
+        date,
+      };
+
+      const updated = [...weights, newWeight];
+
+      setWeights(updated);
+
+      localStorage.setItem(
+        "weights",
+        JSON.stringify(updated)
+      );
     }
-
-    setRecords(updated);
-
-    localStorage.setItem(
-      "weights",
-      JSON.stringify(updated)
-    );
 
     setWeight("");
     setDate("");
   };
 
   const handleEdit = (index) => {
-    setWeight(
-      records[index].weight
-    );
-
-    setDate(
-      records[index].date
-    );
-
+    setWeight(weights[index].weight);
+    setDate(weights[index].date);
     setEditIndex(index);
   };
 
   const handleDelete = (index) => {
-    const updated =
-      records.filter(
-        (_, i) => i !== index
-      );
+    const updated = weights.filter(
+      (_, i) => i !== index
+    );
 
-    setRecords(updated);
+    setWeights(updated);
 
     localStorage.setItem(
       "weights",
@@ -84,12 +75,9 @@ function WeightTracker() {
     );
   };
 
-  const filtered =
-    records.filter((item) =>
-      item.date.includes(
-        search
-      )
-    );
+  const filtered = weights.filter((item) =>
+    item.weight.toString().includes(search)
+  );
 
   return (
     <div className="form-container">
@@ -101,23 +89,21 @@ function WeightTracker() {
 
           <input
             type="number"
-            placeholder="Weight"
+            placeholder="Weight (kg)"
             value={weight}
             onChange={(e) =>
-              setWeight(
-                e.target.value
-              )
+              setWeight(e.target.value)
             }
+            required
           />
 
           <input
             type="date"
             value={date}
             onChange={(e) =>
-              setDate(
-                e.target.value
-              )
+              setDate(e.target.value)
             }
+            required
           />
 
           <button type="submit">
@@ -130,58 +116,48 @@ function WeightTracker() {
 
         <input
           className="search-box"
-          placeholder="Search Date"
+          type="text"
+          placeholder="Search Weight"
           value={search}
           onChange={(e) =>
-            setSearch(
-              e.target.value
-            )
+            setSearch(e.target.value)
           }
         />
 
-        {filtered.map(
-          (item, index) => (
-            <div
-              key={index}
-              className="record-card"
-            >
-              <div className="record-info">
-                <h4>
-                  {item.weight} kg
-                </h4>
-
-                <p>
-                  {item.date}
-                </p>
-              </div>
-
-              <div className="record-actions">
-                <button
-                  className="action-btn edit-btn"
-                  onClick={() =>
-                    handleEdit(
-                      index
-                    )
-                  }
-                >
-                  <FaEdit />
-                </button>
-
-                <button
-                  className="action-btn delete-btn"
-                  onClick={() =>
-                    handleDelete(
-                      index
-                    )
-                  }
-                >
-                  <FaTrash />
-                </button>
-              </div>
+        {filtered.map((item, index) => (
+          <div
+            key={index}
+            className="record-card"
+          >
+            <div className="record-info">
+              <h4>{item.weight} kg</h4>
+              <p>{item.date}</p>
             </div>
-          )
-        )}
 
+            <div className="record-actions">
+              <button
+                type="button"
+                className="action-btn edit-btn"
+                onClick={() =>
+                  handleEdit(index)
+                }
+              >
+                <FaEdit />
+              </button>
+
+              <button
+                type="button"
+                className="action-btn delete-btn"
+                onClick={() =>
+                  handleDelete(index)
+                }
+              >
+                <FaTrash />
+              </button>
+            </div>
+
+          </div>
+        ))}
       </div>
     </div>
   );

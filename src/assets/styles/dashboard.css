@@ -89,3 +89,9 @@
   margin-bottom: 20px;
   color: #2d3436;
 }
+
+.bmi-section {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}

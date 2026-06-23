@@ -28,12 +28,24 @@
 
 .nav-links a {
   text-decoration: none;
-  color: #333;
-  font-weight: 500;
+  color: #00b894;
+  font-weight: 600;
+
+  padding: 8px 16px;
+
+  border-radius: 10px;
+
+  border: 2px solid transparent;
+
+  transition: all 0.3s ease;
 }
 
 .nav-links a:hover {
-  color: #00b894;
+  border: 2px solid #00b894;
+
+  background: #f0fffb;
+
+  box-shadow: 0 2px 8px rgba(0, 184, 148, 0.15);
 }
 
 .logout-btn {

@@ -18,38 +18,58 @@ function Workouts() {
   const [editIndex, setEditIndex] =
     useState(null);
 
-  const [workouts, setWorkouts] =
-    useState(
-      JSON.parse(
-        localStorage.getItem("workouts")
-      ) || []
-    );
+  const [workouts, setWorkouts] = useState(
+    JSON.parse(localStorage.getItem("workouts")) || []
+  );
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const workout = {
-      workoutName,
-      duration,
-      calories,
-    };
-
-    let updated;
-
-    if (editIndex !== null) {
-      updated = [...workouts];
-      updated[editIndex] = workout;
-      setEditIndex(null);
-    } else {
-      updated = [...workouts, workout];
+    if (
+      !workoutName ||
+      !duration ||
+      !calories
+    ) {
+      alert("Please fill all fields");
+      return;
     }
 
-    setWorkouts(updated);
+    if (editIndex !== null) {
+      const updated = [...workouts];
 
-    localStorage.setItem(
-      "workouts",
-      JSON.stringify(updated)
-    );
+      updated[editIndex] = {
+        workoutName,
+        duration,
+        calories,
+      };
+
+      setWorkouts(updated);
+
+      localStorage.setItem(
+        "workouts",
+        JSON.stringify(updated)
+      );
+
+      setEditIndex(null);
+    } else {
+      const newWorkout = {
+        workoutName,
+        duration,
+        calories,
+      };
+
+      const updated = [
+        ...workouts,
+        newWorkout,
+      ];
+
+      setWorkouts(updated);
+
+      localStorage.setItem(
+        "workouts",
+        JSON.stringify(updated)
+      );
+    }
 
     setWorkoutName("");
     setDuration("");
@@ -57,28 +77,25 @@ function Workouts() {
   };
 
   const handleEdit = (index) => {
-    const workout = workouts[index];
-
     setWorkoutName(
-      workout.workoutName
+      workouts[index].workoutName
     );
 
     setDuration(
-      workout.duration
+      workouts[index].duration
     );
 
     setCalories(
-      workout.calories
+      workouts[index].calories
     );
 
     setEditIndex(index);
   };
 
   const handleDelete = (index) => {
-    const updated =
-      workouts.filter(
-        (_, i) => i !== index
-      );
+    const updated = workouts.filter(
+      (_, i) => i !== index
+    );
 
     setWorkouts(updated);
 
@@ -88,20 +105,18 @@ function Workouts() {
     );
   };
 
-  const filtered =
-    workouts.filter((item) =>
-      item.workoutName
+  const filtered = workouts.filter(
+    (workout) =>
+      workout.workoutName
         .toLowerCase()
-        .includes(
-          search.toLowerCase()
-        )
-    );
+        .includes(search.toLowerCase())
+  );
 
   return (
     <div className="form-container">
       <div className="form-card">
 
-        <h2>Workouts</h2>
+        <h2>Workout Tracker</h2>
 
         <form onSubmit={handleSubmit}>
 
@@ -114,28 +129,31 @@ function Workouts() {
                 e.target.value
               )
             }
+            required
           />
 
           <input
             type="number"
-            placeholder="Duration"
+            placeholder="Duration (min)"
             value={duration}
             onChange={(e) =>
               setDuration(
                 e.target.value
               )
             }
+            required
           />
 
           <input
             type="number"
-            placeholder="Calories"
+            placeholder="Calories Burned"
             value={calories}
             onChange={(e) =>
               setCalories(
                 e.target.value
               )
             }
+            required
           />
 
           <button type="submit">
@@ -148,12 +166,11 @@ function Workouts() {
 
         <input
           className="search-box"
+          type="text"
           placeholder="Search Workout"
           value={search}
           onChange={(e) =>
-            setSearch(
-              e.target.value
-            )
+            setSearch(e.target.value)
           }
         />
 
@@ -165,53 +182,45 @@ function Workouts() {
             >
               <div className="record-info">
                 <h4>
-                  {
-                    workout.workoutName
-                  }
+                  {workout.workoutName}
                 </h4>
 
                 <p>
                   Duration:
-                  {
-                    workout.duration
-                  }
+                  {workout.duration} min
                 </p>
 
                 <p>
                   Calories:
-                  {
-                    workout.calories
-                  }
+                  {workout.calories}
                 </p>
               </div>
 
               <div className="record-actions">
                 <button
+                  type="button"
                   className="action-btn edit-btn"
                   onClick={() =>
-                    handleEdit(
-                      index
-                    )
+                    handleEdit(index)
                   }
                 >
                   <FaEdit />
                 </button>
 
                 <button
+                  type="button"
                   className="action-btn delete-btn"
                   onClick={() =>
-                    handleDelete(
-                      index
-                    )
+                    handleDelete(index)
                   }
                 >
                   <FaTrash />
                 </button>
               </div>
+
             </div>
           )
         )}
-
       </div>
     </div>
   );

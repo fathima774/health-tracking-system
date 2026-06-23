@@ -1,38 +1,129 @@
-.bmi-card {
-  background: #ffffff;
-  padding: 30px;
-  border-radius: 20px;
-  text-align: center;
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.08);
-  margin-top: 20px;
-  width: 350px;
-}
+/* BMI Section */
 
-.bmi-card h2 {
-  color: #2d3436;
-  margin-bottom: 20px;
-}
-
-.bmi-value {
-  font-size: 60px;
-  font-weight: bold;
-  color: #00B894;
-}
-
-.bmi-status {
-  margin-top: 15px;
-  font-size: 20px;
-  font-weight: 600;
-  color: #636e72;
-}
-
-@media (max-width: 768px) {
-  .bmi-value {
-    font-size: 45px;
-  }
-}
 .bmi-section {
   display: flex;
   justify-content: center;
+  align-items: center;
   margin: 30px 0;
+}
+
+/* BMI Card */
+
+.bmi-card {
+  width: 350px;
+
+  background: #ffffff;
+
+  padding: 30px;
+
+  border-radius: 25px;
+
+  border: 3px solid #00B894;
+
+  text-align: center;
+
+  box-shadow:
+    0 0 15px rgba(0, 184, 148, 0.15),
+    0 10px 25px rgba(0, 0, 0, 0.08);
+
+  transition: all 0.3s ease;
+}
+
+.bmi-card:hover {
+  transform: translateY(-5px);
+
+  box-shadow:
+    0 0 25px rgba(0, 184, 148, 0.25),
+    0 15px 35px rgba(0, 0, 0, 0.12);
+}
+
+/* Heading */
+
+.bmi-card h2 {
+  color: #2d3436;
+
+  margin-bottom: 25px;
+
+  font-size: 24px;
+
+  font-weight: 700;
+}
+
+/* Height & Weight Section */
+
+.bmi-details {
+  background: #f8fffd;
+
+  border: 1px solid #d7fff3;
+
+  border-radius: 15px;
+
+  padding: 15px;
+
+  margin-bottom: 20px;
+}
+
+.bmi-details p {
+  margin: 10px 0;
+
+  font-size: 16px;
+
+  color: #2d3436;
+
+  font-weight: 500;
+}
+
+.bmi-details strong {
+  color: #00B894;
+}
+
+/* BMI Number */
+
+.bmi-value {
+  font-size: 60px;
+
+  font-weight: 700;
+
+  color: #00B894;
+
+  margin: 15px 0;
+}
+
+/* BMI Status */
+
+.bmi-status {
+  display: inline-block;
+
+  background: rgba(0, 184, 148, 0.12);
+
+  color: #00B894;
+
+  padding: 10px 20px;
+
+  border-radius: 30px;
+
+  font-size: 18px;
+
+  font-weight: 600;
+
+  margin-top: 10px;
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+  .bmi-card {
+    width: 100%;
+    max-width: 350px;
+
+    padding: 25px;
+  }
+
+  .bmi-value {
+    font-size: 45px;
+  }
+
+  .bmi-status {
+    font-size: 16px;
+  }
 }

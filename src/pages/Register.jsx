@@ -8,6 +8,8 @@ function Register() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    age: "",
+    height: "",
     password: "",
     confirmPassword: "",
   });
@@ -31,7 +33,8 @@ function Register() {
       return;
     }
 
-    let users = JSON.parse(localStorage.getItem("users")) || [];
+    const users =
+      JSON.parse(localStorage.getItem("users")) || [];
 
     const existingUser = users.find(
       (user) =>
@@ -47,6 +50,8 @@ function Register() {
     const newUser = {
       name: formData.name,
       email: formData.email,
+      age: formData.age,
+      height: formData.height,
       password: formData.password,
     };
 
@@ -65,10 +70,13 @@ function Register() {
   return (
     <div className="register-container">
       <div className="register-card">
+
         <h2>VitalSync</h2>
+
         <h3>Create Account</h3>
 
         <form onSubmit={handleSubmit}>
+
           <div className="form-group">
             <label>Full Name</label>
 
@@ -90,6 +98,32 @@ function Register() {
               name="email"
               placeholder="Enter Email"
               value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Age</label>
+
+            <input
+              type="number"
+              name="age"
+              placeholder="Enter Age"
+              value={formData.age}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Height (cm)</label>
+
+            <input
+              type="number"
+              name="height"
+              placeholder="Enter Height"
+              value={formData.height}
               onChange={handleChange}
               required
             />
@@ -122,12 +156,7 @@ function Register() {
           </div>
 
           {error && (
-            <p
-              style={{
-                color: "red",
-                marginBottom: "10px",
-              }}
-            >
+            <p style={{ color: "red" }}>
               {error}
             </p>
           )}
@@ -138,17 +167,19 @@ function Register() {
           >
             Register
           </button>
+
         </form>
 
-        <p className="login-link">
+        <p>
           Already have an account?{" "}
-          <Link to="/login">Login</Link>
+          <Link to="/login">
+            Login
+          </Link>
         </p>
+
       </div>
     </div>
   );
 }
 
 export default Register;
-
-
