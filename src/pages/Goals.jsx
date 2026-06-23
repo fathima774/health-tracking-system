@@ -95,7 +95,7 @@ function Goals() {
 
           <input
             type="number"
-            placeholder="Target in kg"
+            placeholder="Target (kg)"
             value={target}
             onChange={(e) =>
               setTarget(e.target.value)
